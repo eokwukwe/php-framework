@@ -1,0 +1,22 @@
+{
+    "name": "eokwukwe/php-framework",
+    "description": "PHP Framework",
+    "type": "project",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "EOkwukwe\\Framework\\": "framework/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Okwukwe Ewurum",
+            "email": "okwukwe.ewurum@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "6.3.x-dev"
+    }
+}
