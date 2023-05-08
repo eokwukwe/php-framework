@@ -13,23 +13,29 @@ class Kernel
 
         // Create a dispatcher
         $dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
-            $routeCollector->addRoute('GET', '/', function () {
+            $routes = include BASE_PATH . '/routes/web.php';
 
-                $content = '<h1>Hello World</h1>';
+            foreach ($routes as $route) {
+                $routeCollector->addRoute(...$route);
+            }
 
-                return new Response($content);
-            });
+            // $routeCollector->addRoute('GET', '/', function () {
 
-            $routeCollector->addRoute('GET', '/posts/{id:\d+}', function ($routeParams) {
-                $content = "<h1>This is Post {$routeParams['id']}</h1>";
+            //     $content = '<h1>Hello World</h1>';
 
-                return new Response($content);
-            });
+            //     return new Response($content);
+            // });
+
+            // $routeCollector->addRoute('GET', '/posts/{id:\d+}', function ($routeParams) {
+            //     $content = "<h1>This is Post {$routeParams['id']}</h1>";
+
+            //     return new Response($content);
+            // });
         });
 
         $routeInfo = $dispatcher->dispatch(
-            httpMethod: $request->server['REQUEST_METHOD'],
-            uri: $request->server['REQUEST_URI']
+            httpMethod: $request->getMethod(),
+            uri: $request->getPathInfo()
         );
 
         // Dispatch a URI, to obtain the route info
