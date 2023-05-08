@@ -2,11 +2,11 @@
 
 namespace EOkwukwe\Framework\Routing;
 
-use EOkwukwe\Framework\Http\HttpException;
-use EOkwukwe\Framework\Http\HttpRequestMethodException;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use EOkwukwe\Framework\Http\Request;
+use EOkwukwe\Framework\Http\HttpException;
+use EOkwukwe\Framework\Http\HttpRequestMethodException;
 
 use function FastRoute\simpleDispatcher;
 
@@ -26,7 +26,7 @@ class Router implements RouterInterface
         return [[new $controller, $method], $routeParams];
     }
 
-    private function extractRouteInfo(Request $request)
+    private function extractRouteInfo(Request $request): array
     {
         // Create a dispatcher
         $dispatcher = simpleDispatcher(function (RouteCollector $routeCollector) {
@@ -46,15 +46,20 @@ class Router implements RouterInterface
 
         switch ($routeInfo[0]) {
             case Dispatcher::FOUND:
-                return [$routeInfo[1], $routeInfo[2]]; // routeHandler, vars
+                return [$routeInfo[1], $routeInfo[2]]; // [routeHandler, vars]
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethods = implode(', ', $routeInfo[1]);
 
-                throw new HttpRequestMethodException(
+                $e = new HttpRequestMethodException(
                     "The allowed methods are $allowedMethods"
                 );
+
+                $e->setStatusCode(405);
+                throw $e;
             default:
-                throw new HttpException('Not found');
+                $e = new HttpException('Not found');
+                $e->setStatusCode(404);
+                throw $e;
         }
     }
 }
