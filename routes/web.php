@@ -1,12 +1,7 @@
 <?php
 
-use EOkwukwe\Framework\Http\Response;
+use App\Controller\HomeController;
 
 return [
-    ['GET', '/', function () {
-
-        $content = '<h1>Hello World</h1>';
-
-        return new Response($content);
-    }]
+    ['GET', '/', [HomeController::class]]
 ];

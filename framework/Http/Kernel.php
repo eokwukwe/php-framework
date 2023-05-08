@@ -18,19 +18,6 @@ class Kernel
             foreach ($routes as $route) {
                 $routeCollector->addRoute(...$route);
             }
-
-            // $routeCollector->addRoute('GET', '/', function () {
-
-            //     $content = '<h1>Hello World</h1>';
-
-            //     return new Response($content);
-            // });
-
-            // $routeCollector->addRoute('GET', '/posts/{id:\d+}', function ($routeParams) {
-            //     $content = "<h1>This is Post {$routeParams['id']}</h1>";
-
-            //     return new Response($content);
-            // });
         });
 
         $routeInfo = $dispatcher->dispatch(
@@ -39,9 +26,11 @@ class Kernel
         );
 
         // Dispatch a URI, to obtain the route info
-        [$status, $handler, $routeParams] = $routeInfo;
+        [$status, [$controller, $method], $routeParams] = $routeInfo;
 
         // Call the handler, provided by the route info, in order to create a Response
-        return $handler($routeParams);
+        $response = (new $controller())->$method($routeParams);
+
+        return $response;
     }
 }
