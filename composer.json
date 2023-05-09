@@ -1,13 +1,12 @@
 {
-    "name": "eokwukwe/php-framework",
-    "description": "PHP Framework",
+    "name": "eokwukwe/php-app",
+    "description": "PHP app using the framework",
     "type": "project",
     "minimum-stability": "dev",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "EOkwukwe\\Framework\\": "framework/"
+            "App\\": "src/"
         }
     },
     "authors": [
@@ -16,10 +15,16 @@
             "email": "okwukwe.ewurum@gmail.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "framework"
+        }
+    ],
     "require-dev": {
         "symfony/var-dumper": "6.3.x-dev"
     },
     "require": {
-        "nikic/fast-route": "2.0.x-dev"
+        "eokwukwe/php-framework": "dev-main"
     }
 }

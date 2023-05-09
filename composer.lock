@@ -4,8 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42a0f5f80e068cb38d7521e3af42c179",
+    "content-hash": "281d291c2b724797a08f13a308ac68cd",
     "packages": [
+        {
+            "name": "eokwukwe/php-framework",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "framework",
+                "reference": "2f66a6f3f8def0ea35aedabfa02714f29d02fd8a"
+            },
+            "require": {
+                "nikic/fast-route": "2.0.x-dev"
+            },
+            "require-dev": {
+                "symfony/var-dumper": "6.3.x-dev"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "EOkwukwe\\Framework\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Okwukwe Ewurum",
+                    "email": "okwukwe.ewurum@gmail.com"
+                }
+            ],
+            "description": "PHP Framework",
+            "transport-options": {
+                "relative": true
+            }
+        },
         {
             "name": "nikic/fast-route",
             "version": "dev-master",
@@ -245,7 +279,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "nikic/fast-route": 20,
+        "eokwukwe/php-framework": 20,
         "symfony/var-dumper": 20
     },
     "prefer-stable": false,

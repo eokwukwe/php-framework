@@ -1,0 +1,31 @@
+{
+    "name": "eokwukwe/php-framework",
+    "description": "PHP Framework",
+    "type": "project",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "EOkwukwe\\Framework\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "EOkwukwe\\Framework\\Tests\\": "tests"
+        }
+    },
+    "authors": [
+        {
+            "name": "Okwukwe Ewurum",
+            "email": "okwukwe.ewurum@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "6.3.x-dev",
+        "phpunit/phpunit": "^10.2@dev"
+    },
+    "require": {
+        "nikic/fast-route": "2.0.x-dev",
+        "psr/container": "^2.0@dev"
+    }
+}
