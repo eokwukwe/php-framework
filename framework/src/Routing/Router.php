@@ -7,6 +7,7 @@ use FastRoute\RouteCollector;
 use EOkwukwe\Framework\Http\Request;
 use EOkwukwe\Framework\Http\HttpException;
 use EOkwukwe\Framework\Http\HttpRequestMethodException;
+use Psr\Container\ContainerInterface;
 
 use function FastRoute\simpleDispatcher;
 
@@ -14,7 +15,7 @@ class Router implements RouterInterface
 {
     private array $routes;
 
-    public function dispatch(Request $request): array
+    public function dispatch(Request $request, ContainerInterface $container): array
     {
         // Dispatch a URI, to obtain the route info
         [$handler, $routeParams] = $this->extractRouteInfo($request);
@@ -23,9 +24,11 @@ class Router implements RouterInterface
             return [$handler, $routeParams];
         }
 
-        [$controller, $method] = $handler;
+        [$controllerId, $method] = $handler;
 
-        return [[new $controller, $method], $routeParams];
+        $controller = $container->get($controllerId);
+
+        return [[$controller, $method], $routeParams];
     }
 
     public function setRoutes(array $routes): void
