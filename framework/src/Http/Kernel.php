@@ -4,12 +4,12 @@ namespace EOkwukwe\Framework\Http;
 
 use Exception;
 use EOkwukwe\Framework\Routing\Router;
+use EOkwukwe\Framework\Routing\RouterInterface;
 
 class Kernel
 {
-    public function __construct(
-        private Router $router
-    ) {
+    public function __construct(private RouterInterface $router)
+    {
     }
 
     public function handle(Request $request): Response
