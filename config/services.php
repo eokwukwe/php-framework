@@ -1,4 +1,7 @@
-<?php // config/services.php
+<?php
+
+$dotenv = new \Symfony\Component\Dotenv\Dotenv();
+$dotenv->load(dirname(__DIR__) . '/.env');
 
 $container = new \League\Container\Container();
 
@@ -7,6 +10,12 @@ $container->delegate(new \League\Container\ReflectionContainer(true));
 
 # parameters for application config
 $routes = include BASE_PATH . '/routes/web.php';
+$appEnv = $_SERVER['APP_ENV'];
+
+$container->add(
+    'APP_ENV',
+    new \League\Container\Argument\Literal\StringArgument($appEnv)
+);
 
 // Services
 $container->add(
