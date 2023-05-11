@@ -3,13 +3,19 @@
 namespace App\Controller;
 
 use EOkwukwe\Framework\Http\Response;
+use EOkwukwe\Framework\Controller\AbstractController;
 
-class PostController
+class PostController extends AbstractController
 {
     public function show(int $id): Response
     {
-        $content = "<h1>This is post $id </h1>";
+        return $this->render('post.html.twig', [
+            'postId' => $id
+        ]);
+    }
 
-        return new Response($content);
+    public function create(): Response
+    {
+        return $this->render('create-post.html.twig');
     }
 }

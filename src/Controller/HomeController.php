@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Widget;
-use EOkwukwe\Framework\Http\Response;
 
-class HomeController
+use EOkwukwe\Framework\Http\Response;
+use EOkwukwe\Framework\Controller\AbstractController;
+
+class HomeController extends AbstractController
 {
     public function __construct(private Widget $widget)
     {
@@ -13,8 +15,13 @@ class HomeController
 
     public function index(): Response
     {
-        $content = "<h1>Hello, {$this->widget->name}!</h1>";
+        // dd($this->container->get('twig'));
+        // $content = "<h1>Hello, {$this->widget->name}!</h1>";
 
-        return new Response($content);
+        // return new Response($content);
+
+        $template = "<h1>Hello {{ name }}</h1>";
+
+        return $this->render('home.html.twig');
     }
 }
