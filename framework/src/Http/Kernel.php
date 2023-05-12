@@ -2,6 +2,7 @@
 
 namespace EOkwukwe\Framework\Http;
 
+use Doctrine\DBAL\Connection;
 use Exception;
 use EOkwukwe\Framework\Routing\Router;
 use Psr\Container\ContainerInterface;
@@ -21,6 +22,7 @@ class Kernel
     public function handle(Request $request): Response
     {
         try {
+            dd($this->container->get(Connection::class));
             [$routeHandler, $routeParams] = $this->router->dispatch(
                 $request,
                 $this->container

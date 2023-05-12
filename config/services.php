@@ -13,6 +13,7 @@ $routes = include BASE_PATH . '/routes/web.php';
 $templatesPath = BASE_PATH . '/templates';
 
 $appEnv = $_SERVER['APP_ENV'];
+$databaseUrl = 'sqlite:///' . BASE_PATH . '/var/db.sqlite';
 
 $container->add(
     'APP_ENV',
@@ -45,6 +46,20 @@ $container->add(\EOkwukwe\Framework\Controller\AbstractController::class);
 
 $container->inflector(\EOkwukwe\Framework\Controller\AbstractController::class)
     ->invokeMethod('setContainer', [$container]);
+
+$container->add(\EOkwukwe\Framework\Dbal\ConnectionFactory::class)
+    ->addArguments([
+        new \League\Container\Argument\Literal\StringArgument($databaseUrl)
+    ]);
+
+$container->addShared(
+    \Doctrine\DBAL\Connection::class,
+    function () use ($container): \Doctrine\DBAL\Connection {
+        return $container->get(
+            \EOkwukwe\Framework\Dbal\ConnectionFactory::class
+        )->create();
+    }
+);
 
 
 return $container;
