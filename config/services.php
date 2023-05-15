@@ -73,5 +73,12 @@ $container->add(\EOkwukwe\Framework\Console\Kernel::class)
 $container->add(\EOkwukwe\Framework\Console\Application::class)
     ->addArgument($container);
 
+$container->add(
+    'database:migrations:migrate',
+    \EOkwukwe\Framework\Console\Command\MigrateDatabase::class
+)->addArguments([
+    \Doctrine\DBAL\Connection::class,
+    new \League\Container\Argument\Literal\StringArgument(BASE_PATH . '/migrations')
+]);
 
 return $container;
