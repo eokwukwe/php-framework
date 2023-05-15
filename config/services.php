@@ -15,12 +15,17 @@ $templatesPath = BASE_PATH . '/templates';
 $appEnv = $_SERVER['APP_ENV'];
 $databaseUrl = 'sqlite:///' . BASE_PATH . '/var/db.sqlite';
 
+// Services
 $container->add(
     'APP_ENV',
     new \League\Container\Argument\Literal\StringArgument($appEnv)
 );
 
-// Services
+$container->add(
+    'base-commands-namespace',
+    new \League\Container\Argument\Literal\StringArgument('EOkwukwe\\Framework\\Console\\Command\\')
+);
+
 $container->add(
     EOkwukwe\Framework\Routing\RouterInterface::class,
     EOkwukwe\Framework\Routing\Router::class
@@ -60,6 +65,13 @@ $container->addShared(
         )->create();
     }
 );
+
+// Console Kernel
+$container->add(\EOkwukwe\Framework\Console\Kernel::class)
+    ->addArguments([$container, \EOkwukwe\Framework\Console\Application::class]);
+
+$container->add(\EOkwukwe\Framework\Console\Application::class)
+    ->addArgument($container);
 
 
 return $container;
