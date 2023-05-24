@@ -2,16 +2,23 @@
 
 namespace EOkwukwe\Framework\Controller;
 
+use EOkwukwe\Framework\Http\Request;
 use EOkwukwe\Framework\Http\Response;
 use Psr\Container\ContainerInterface;
 
 abstract class AbstractController
 {
+    protected Request $request;
     protected ?ContainerInterface $container = null;
 
     public function setContainer(ContainerInterface $container): void
     {
         $this->container = $container;
+    }
+
+    public function setRequest(Request $request): void
+    {
+        $this->request = $request;
     }
 
     public function render(

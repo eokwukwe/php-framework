@@ -2,6 +2,7 @@
 
 namespace EOkwukwe\Framework\Routing;
 
+use EOkwukwe\Framework\Controller\AbstractController;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
 use EOkwukwe\Framework\Http\Request;
@@ -27,6 +28,10 @@ class Router implements RouterInterface
         [$controllerId, $method] = $handler;
 
         $controller = $container->get($controllerId);
+
+        if (is_subclass_of($controller, AbstractController::class)) {
+            $controller->setRequest($request);
+        }
 
         return [[$controller, $method], $routeParams];
     }
