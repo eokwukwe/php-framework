@@ -32,8 +32,6 @@ class Container implements ContainerInterface
             $this->add($id);
         }
 
-        dd($this->services);
-
         $object = $this->resolve($this->services[$id]);
 
         return $object;
