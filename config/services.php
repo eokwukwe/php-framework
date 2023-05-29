@@ -41,11 +41,22 @@ $container->add(EOkwukwe\Framework\Http\Kernel::class)
     ->addArgument(EOkwukwe\Framework\Routing\RouterInterface::class)
     ->addArgument($container);
 
-$container->addShared('filesystem-loader', \Twig\Loader\FilesystemLoader::class)
-    ->addArgument(new \League\Container\Argument\Literal\StringArgument($templatesPath));
+$container->addShared(
+    \EOkwukwe\Framework\Session\SessionInterface::class,
+    \EOkwukwe\Framework\Session\Session::class
+);
 
-$container->addShared('twig', \Twig\Environment::class)
-    ->addArgument('filesystem-loader');
+$container->add(
+    'template-renderer-factory',
+    \EOkwukwe\Framework\Template\TwigFactory::class
+)->addArguments([
+    \EOkwukwe\Framework\Session\SessionInterface::class,
+    new \League\Container\Argument\Literal\StringArgument($templatesPath)
+]);
+
+$container->addShared('twig', function () use ($container) {
+    return $container->get('template-renderer-factory')->create();
+});
 
 $container->add(\EOkwukwe\Framework\Controller\AbstractController::class);
 
