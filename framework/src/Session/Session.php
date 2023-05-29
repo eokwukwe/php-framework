@@ -51,7 +51,7 @@ class Session implements SessionInterface
     {
         $flash = $this->get(self::FLASH_KEY) ?? [];
         $flash[$type][] = $message;
-
+        
         $this->set(self::FLASH_KEY, $flash);
     }
 
