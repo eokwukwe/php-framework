@@ -6,7 +6,7 @@ class Session implements SessionInterface
 {
     private const FLASH_KEY = 'flash';
 
-    public function __construct()
+    public function start(): void
     {
         session_start();
     }
@@ -51,7 +51,7 @@ class Session implements SessionInterface
     {
         $flash = $this->get(self::FLASH_KEY) ?? [];
         $flash[$type][] = $message;
-        
+
         $this->set(self::FLASH_KEY, $flash);
     }
 

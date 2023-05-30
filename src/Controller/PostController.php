@@ -8,13 +8,11 @@ use App\Repository\PostRepository;
 use EOkwukwe\Framework\Http\Response;
 use EOkwukwe\Framework\Controller\AbstractController;
 use EOkwukwe\Framework\Http\RedirectResponse;
-use EOkwukwe\Framework\Session\SessionInterface;
 
 class PostController extends AbstractController
 {
     public function __construct(
         private PostMapper $postMapper,
-        private SessionInterface $session,
         private PostRepository $postRepository
     ) {
     }
@@ -43,7 +41,7 @@ class PostController extends AbstractController
 
         $this->postMapper->save($post);
 
-        $this->session->setFlash(
+        $this->request->getSession()->setFlash(
             'success',
             sprintf('Post "%s" successfully created', $title)
         );
