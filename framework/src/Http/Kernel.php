@@ -3,6 +3,7 @@
 namespace EOkwukwe\Framework\Http;
 
 use Doctrine\DBAL\Connection;
+use EOkwukwe\Framework\Http\Middleware\RequestHandlerInterface;
 use Exception;
 use EOkwukwe\Framework\Routing\Router;
 use Psr\Container\ContainerInterface;
@@ -14,7 +15,8 @@ class Kernel
 
     public function __construct(
         private RouterInterface $router,
-        private ContainerInterface $container
+        private ContainerInterface $container,
+        private RequestHandlerInterface $requestHandler
     ) {
         $this->appEnv = $this->container->get('APP_ENV');
     }
@@ -22,12 +24,7 @@ class Kernel
     public function handle(Request $request): Response
     {
         try {
-            [$routeHandler, $routeParams] = $this->router->dispatch(
-                $request,
-                $this->container
-            );
-
-            $response = call_user_func_array($routeHandler, $routeParams);
+            $response = $this->requestHandler->handle($request);
         } catch (Exception $exception) {
             $response = $this->createExceptionResponse($exception);
         }

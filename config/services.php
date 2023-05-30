@@ -37,9 +37,21 @@ $container->extend(EOkwukwe\Framework\Routing\RouterInterface::class)
         [new \League\Container\Argument\Literal\ArrayArgument($routes)]
     );
 
+// $container->add(EOkwukwe\Framework\Http\Kernel::class)
+//     ->addArgument(EOkwukwe\Framework\Routing\RouterInterface::class)
+//     ->addArgument($container);
+
+$container->add(
+    \EOkwukwe\Framework\Http\Middleware\RequestHandlerInterface::class,
+    \EOkwukwe\Framework\Http\Middleware\RequestHandler::class
+)->addArgument($container);
+
 $container->add(EOkwukwe\Framework\Http\Kernel::class)
-    ->addArgument(EOkwukwe\Framework\Routing\RouterInterface::class)
-    ->addArgument($container);
+    ->addArguments([
+        EOkwukwe\Framework\Routing\RouterInterface::class,
+        $container,
+        \EOkwukwe\Framework\Http\Middleware\RequestHandlerInterface::class
+    ]);
 
 $container->addShared(
     \EOkwukwe\Framework\Session\SessionInterface::class,
@@ -91,5 +103,12 @@ $container->add(
     \Doctrine\DBAL\Connection::class,
     new \League\Container\Argument\Literal\StringArgument(BASE_PATH . '/migrations')
 ]);
+
+$container->add(\EOkwukwe\Framework\Http\Middleware\RouterDispatch::class)
+    ->addArguments([
+        \EOkwukwe\Framework\Routing\RouterInterface::class,
+        $container
+    ]);
+
 
 return $container;
